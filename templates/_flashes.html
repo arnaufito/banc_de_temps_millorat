@@ -1,0 +1,11 @@
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="container mt-3">
+            {% for categoria, missatge in messages %}
+                <div class="alert alert-{{ categoria if categoria in ['danger', 'success', 'warning', 'info'] else 'info' }}" role="alert">
+                    {{ missatge }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transferir Hores - Banc de Temps</title>
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+{% set actiu = 'transferencia' %}
+{% include '_navbar.html' %}
+{% include '_flashes.html' %}
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card shadow border-0 border-top border-primary border-4">
+                    <div class="card-body p-5">
+                        <h3 class="text-center text-primary mb-4">Pagar Hores</h3>
+                        <p class="text-center text-muted mb-4">Transfereix el temps acordat per un servei realitzat.</p>
+
+                        <form method="POST" action="/transferencia">
+                            <div class="mb-3">
+                                <label class="form-label">Correu del Destinatari (A qui pagues?)</label>
+                                <input type="email" name="correu_destinatari" class="form-control" placeholder="correu@exemple.cat" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Hores a transferir</label>
+                                <div class="input-group">
+                                    <input type="number" name="hores" class="form-control" step="0.01" min="0.01" placeholder="Ex: 1.25" required>
+                                    <span class="input-group-text bg-white">hores</span>
+                                </div>
+                                <small class="text-muted">Pots usar decimals (0.25, 0.5, 1.5...)</small>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label">Concepte</label>
+                                <input type="text" name="concepte" class="form-control" placeholder="Ex: Classes de mates del divendres" required>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100 btn-lg">Confirmar Transferència</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

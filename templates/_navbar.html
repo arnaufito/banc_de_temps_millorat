@@ -1,0 +1,25 @@
+<!-- Barra de navegació unificada (inclosa a totes les pàgines internes) -->
+<nav class="navbar navbar-expand navbar-dark bg-primary mb-4">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="/mercat">⏳ Banc de Temps</a>
+
+        <ul class="navbar-nav me-auto">
+            <li class="nav-item"><a class="nav-link {% if actiu == 'mercat' %}active fw-bold{% endif %}" href="/mercat">Mercat</a></li>
+            <li class="nav-item"><a class="nav-link {% if actiu == 'crear_oferta' %}active fw-bold{% endif %}" href="/crear_oferta">Crear Oferta</a></li>
+            <li class="nav-item"><a class="nav-link {% if actiu == 'transferencia' %}active fw-bold{% endif %}" href="/transferencia">Pagar Hores</a></li>
+            <li class="nav-item"><a class="nav-link {% if actiu == 'historial' %}active fw-bold{% endif %}" href="/historial">Historial</a></li>
+            <li class="nav-item"><a class="nav-link {% if actiu == 'xat' %}active fw-bold{% endif %}" href="/xat">Xats 💬</a></li>
+            {% if session.get('es_admin') == 1 %}
+                <li class="nav-item"><a class="nav-link text-warning {% if actiu == 'admin' %}active fw-bold{% endif %}" href="/admin">⚙️ Admin</a></li>
+            {% endif %}
+        </ul>
+
+        <ul class="navbar-nav align-items-center">
+            <li class="nav-item me-3">
+                <span class="text-white fw-bold">Saldo: {{ saldo }}h</span>
+            </li>
+            <li class="nav-item"><a class="nav-link {% if actiu == 'perfil' %}active fw-bold{% endif %}" href="/perfil">Perfil</a></li>
+            <li class="nav-item"><a class="btn btn-outline-light btn-sm ms-2" href="/logout">Sortir</a></li>
+        </ul>
+    </div>
+</nav>

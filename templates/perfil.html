@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Meu Perfil - Banc de Temps</title>
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+{% set actiu = 'perfil' %}
+{% include '_navbar.html' %}
+{% include '_flashes.html' %}
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-5">
+                        <h3 class="text-primary border-bottom pb-2 mb-4">Configuració del Perfil</h3>
+
+                        <form method="POST" action="/perfil">
+                            <div class="text-center mb-4">
+                                <div class="bg-secondary rounded-circle d-inline-block" style="width: 120px; height: 120px; line-height: 120px; color: white; font-size: 3rem;">
+                                    👤
+                                </div>
+                                <div class="mt-2">
+                                    <span class="text-muted small">Correu electrònic: <strong>{{ usuari[1] }}</strong></span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label text-muted">Nom a mostrar</label>
+                                    <input type="text" name="nom" class="form-control" value="{{ usuari[0] }}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Ciutat o Població</label>
+                                    <select class="form-select" name="ciutat" id="ciutat" required>
+                                        <option value="Barcelona" {% if usuari[2] == 'Barcelona' %}selected{% endif %}>Barcelona</option>
+                                        <option value="Girona" {% if usuari[2] == 'Girona' %}selected{% endif %}>Girona</option>
+                                        <option value="Lleida" {% if usuari[2] == 'Lleida' %}selected{% endif %}>Lleida</option>
+                                        <option value="Tarragona" {% if usuari[2] == 'Tarragona' %}selected{% endif %}>Tarragona</option>
+                                        <option value="L'Hospitalet de Llobregat" {% if usuari[2] == "L'Hospitalet de Llobregat" %}selected{% endif %}>L'Hospitalet de Llobregat</option>
+                                        <option value="Badalona" {% if usuari[2] == 'Badalona' %}selected{% endif %}>Badalona</option>
+                                        <option value="Terrassa" {% if usuari[2] == 'Terrassa' %}selected{% endif %}>Terrassa</option>
+                                        <option value="Sabadell" {% if usuari[2] == 'Sabadell' %}selected{% endif %}>Sabadell</option>
+                                        <option value="Altres" {% if usuari[2] not in ['Barcelona', 'Girona', 'Lleida', 'Tarragona', "L'Hospitalet de Llobregat", 'Badalona', 'Terrassa', 'Sabadell'] %}selected{% endif %}>Altres poblacions...</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3" id="ciutat_altra_wrapper" style="display:none;">
+                                    <label class="form-label">Especifica la teva població</label>
+                                    <input type="text" name="ciutat_altra" class="form-control"
+                                           value="{% if usuari[2] not in ['Barcelona', 'Girona', 'Lleida', 'Tarragona', "L'Hospitalet de Llobregat", 'Badalona', 'Terrassa', 'Sabadell'] %}{{ usuari[2] }}{% endif %}"
+                                           placeholder="Escriu el nom de la teva població">
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">La meva descripció</label>
+                                <textarea name="descripcio" class="form-control" rows="4" placeholder="Escriu alguna cosa sobre tu...">{{ usuari[3] }}</textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100">Guardar Canvis</button>
+                        </form>
+                        <div class="text-center mt-4">
+                            <a href="/normes" class="text-secondary" style="text-decoration: underline;">Llegir les Normes d'Ús</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var select = document.getElementById('ciutat');
+            var wrapper = document.getElementById('ciutat_altra_wrapper');
+            function actualitza() {
+                wrapper.style.display = (select.value === 'Altres') ? 'block' : 'none';
+            }
+            select.addEventListener('change', actualitza);
+            actualitza();
+        });
+    </script>
+
+</body>
+</html>

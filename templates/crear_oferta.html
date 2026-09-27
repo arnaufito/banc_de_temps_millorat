@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publicar Oferta - Banc de Temps</title>
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+{% set actiu = 'crear_oferta' %}
+{% include '_navbar.html' %}
+{% include '_flashes.html' %}
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-5">
+                        <h3 class="text-primary mb-4">Publicar un nou servei</h3>
+
+                        <form action="/crear_oferta" method="POST">
+
+                             <div class="mb-3">
+                                <label class="form-label text-muted">Títol de l'oferta</label>
+                                <input type="text" name="titol" class="form-control" placeholder="Ex: Classes de piano" required>
+                             </div>
+
+                             <div class="mb-3">
+                                <label for="categoria" class="form-label">Categoria de l'oferta</label>
+                                <select class="form-select" name="categoria" id="categoria" required>
+                                    <option value="" selected disabled>-- Selecciona una categoria --</option>
+                                    <option value="Classes i Formació">📚 Classes i Formació (Idiomes, repàs escolar, música...)</option>
+                                    <option value="Cures i Acompanyament">🤝 Cures i Acompanyament (Cangur, passejar mascotes, gent gran...)</option>
+                                    <option value="Llar i Bricolatge">🛠️ Llar i Bricolatge (Petites reparacions, neteja, muntar mobles...)</option>
+                                    <option value="Informàtica i Tecnologia">💻 Informàtica i Tecnologia (Reparació d'ordinadors, ajuda amb el mòbil...)</option>
+                                    <option value="Assessorament i Gestions">📝 Assessorament i Gestions (Tràmits, traduccions, disseny...)</option>
+                                    <option value="Oci i Esports">⚽ Oci i Esports (Entrenament personal, rutes, jocs de taula...)</option>
+                                    <option value="Bellesa i Benestar">💆 Bellesa i Benestar (Tallar els cabells, massatges, estètica...)</option>
+                                    <option value="Art i Creativitat">🎨 Art i Creativitat (Dibuix, fotografia, manualitats...)</option>
+                                    <option value="Altres">✨ Altres</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label text-muted">Descripció</label>
+                                <textarea name="descripcio" class="form-control" rows="3" placeholder="Explica els detalls de la teva oferta..." required></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label text-muted">Hores</label>
+                                <input type="number" name="hores" class="form-control" placeholder="Hores" step="0.01" min="0.01" required>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100">Publicar nova oferta</button>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

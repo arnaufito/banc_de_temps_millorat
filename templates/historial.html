@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Meu Historial - Banc de Temps</title>
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+{% set actiu = 'historial' %}
+{% include '_navbar.html' %}
+{% include '_flashes.html' %}
+
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="text-primary m-0">Les meves ofertes publicades</h2>
+            <a href="/crear_oferta" class="btn btn-success">➕ Nova Oferta</a>
+        </div>
+
+        <div class="row">
+            {% for oferta in ofertes %}
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm h-100 border-0">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold text-dark">{{ oferta[1] }}</h5>
+                            <p class="card-text text-muted">{{ oferta[2] }}</p>
+                        </div>
+                        <div class="card-footer bg-white border-top d-flex justify-content-between align-items-center">
+                            <span class="badge bg-info text-dark">Activa</span>
+                            <a href="/eliminar_oferta/{{ oferta[0] }}" class="btn btn-outline-danger btn-sm" onclick="return confirm('Estàs segur que vols eliminar aquesta oferta per complet?')">
+                                🗑️ Eliminar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-12 text-center py-5 bg-white shadow-sm rounded">
+                    <h4 class="text-muted mb-3">Encara no has publicat cap oferta.</h4>
+                    <p class="text-secondary">Quan ofereixis el teu temps o algun servei, apareixerà aquí perquè ho puguis gestionar.</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Historial de transferències d'hores (pagades i rebudes) -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <h3 class="text-primary mb-3">Historial de transaccions</h3>
+                {% if transaccions %}
+                    <div class="card shadow-sm border-0 mb-5">
+                        <div class="card-body p-0">
+                            {% for t in transaccions %}
+                                <div class="d-flex justify-content-between align-items-center border-bottom p-3">
+                                    <div>
+                                        {% if t.id_pagador == el_meu_id %}
+                                            <strong class="text-danger">- {{ t.hores }}h</strong>
+                                            <span class="text-muted"> pagades a {{ t.nom_cobrador }}</span>
+                                        {% else %}
+                                            <strong class="text-success">+ {{ t.hores }}h</strong>
+                                            <span class="text-muted"> rebudes de {{ t.nom_pagador }}</span>
+                                        {% endif %}
+                                        {% if t.concepte %}<br><small class="text-muted">{{ t.concepte }}</small>{% endif %}
+                                    </div>
+                                    <small class="text-muted">{{ t.data }}</small>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% else %}
+                    <p class="text-muted mb-5">Encara no has fet cap transacció d'hores.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

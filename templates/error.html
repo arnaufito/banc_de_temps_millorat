@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ titol|default("Error") }} - Banc de Temps</title>
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <div class="container text-center mt-5">
+        <div class="card shadow-sm border-0" style="max-width: 500px; margin: 0 auto;">
+            <div class="card-body p-5">
+                <h2 class="text-danger mb-3">{{ titol|default("Ep! Alguna cosa ha fallat") }}</h2>
+                <p class="text-muted mb-4">{{ missatge }}</p>
+                <a href="{{ enllac|default(url_for('inici')) }}" class="btn btn-primary">
+                    {{ text_enllac|default("Tornar a l'inici") }}
+                </a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

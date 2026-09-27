@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercat de Serveis - Banc de Temps</title>
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+{% set actiu = 'mercat' %}
+{% include '_navbar.html' %}
+{% include '_flashes.html' %}
+
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="text-primary">Ofertes Disponibles</h2>
+            <a href="/crear_oferta" class="btn btn-primary">Publicar nova oferta</a>
+        </div>
+
+        <!-- Cerca i filtre per categoria -->
+        <form method="GET" action="/mercat" class="row mb-4">
+            <div class="col-md-8 mb-2">
+                <input type="text" name="q" value="{{ cerca }}" class="form-control" placeholder="Cerca per títol o descripció...">
+            </div>
+            <div class="col-md-3 mb-2">
+                <select name="categoria" class="form-select">
+                    <option value="">Totes les categories</option>
+                    {% for cat in categories %}
+                        <option value="{{ cat }}" {% if cat == categoria_activa %}selected{% endif %}>{{ cat }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-1 mb-2">
+                <button type="submit" class="btn btn-primary w-100">🔍</button>
+            </div>
+        </form>
+
+        <!-- Graella d'anuncis -->
+            <div class="row">
+                {% for oferta in ofertes %}
+                 <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            {% if oferta[4] %}<span class="badge bg-secondary mb-2">{{ oferta[4] }}</span>{% endif %}
+                            <h5 class="card-title">{{ oferta[1] }}</h5>
+                            <p class="card-text">{{ oferta[2] }}</p>
+                            <p><strong>Hores de cost:</strong> {{ oferta[3] }}</p>
+                            <a href="/oferta/{{ oferta[0] }}" class="btn btn-outline-primary">
+                                Veure detalls
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                 {% else %}
+                 <div class="col-12 text-center mt-5">
+                    {% if cerca or categoria_activa %}
+                        <h4>No s'ha trobat cap oferta amb aquests filtres.</h4>
+                        <p class="text-muted"><a href="/mercat">Treure els filtres</a></p>
+                    {% else %}
+                        <h4>El mercat està buit ara mateix.</h4>
+                        <p class="text-muted">Anima't i publica la primera feina!</p>
+                    {% endif %}
+                </div>
+    {% endfor %}
+</div>
+</div>
+
+</body>
+</html>
